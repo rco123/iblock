@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="button.css"> -->
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
+    
+	<script src="node_modules/xterm/lib/xterm.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/addons/attach/attach.js"></script>
+
+	<script type="module" src="node_modules/xterm-addon-attach/lib/xterm-addon-attach.js"></script>
+	
+	
+	<head>
+		<meta charset="utf-8">
+		
+		<title>iBlockly</title>
+		<script src="blockly_compressed.js"></script>
+		<script src="blocks_compressed.js"></script>
+		<script src="javascript_compressed.js"></script>
+		<script src="/msg/js/en.js"></script>
+		<script src="python_compressed.js"></script>
+		
+
+		<script src="code.js"></script>
+		<script src="ai_blk.js"></script>
+		<script src="ai_blk_gen.js"></script>
+
+		<script src="robo_blk.js"></script>
+		<script src="robo_blk_gen.js"></script>
+		<script src="robo_ai_blk.js"></script>
+		<script src="robo_ai_blk_gen.js"></script>
+		<script src="robo_ps_blk.js"></script>
+		<script src="robo_ps_blk_gen.js"></script>
+
+		<script src="FileSaver.js"></script>
+		<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none   ">
+	<category name="LOGIC" colour="%{BKY_LOGIC_HUE}" >
+		<block type="controls_if"   ></block>
+		<block type="logic_compare"></block>
+		<block type="logic_operation"></block>
+		<block type="logic_negate"></block>
+		<block type="logic_boolean"></block>
+		<block type="logic_null"></block>
+		<block type="logic_ternary"></block>
+	</category>
+	<category name="LOOPS" colour="%{BKY_LOOPS_HUE}">
+		<block type="controls_repeat_ext">
+			<value name="TIMES">
+				<shadow type="math_number">
+					<field name="NUM">10</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="controls_whileUntil"></block>
+		<block type="controls_for">
+			<value name="FROM">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+			<value name="TO">
+				<shadow type="math_number">
+					<field name="NUM">10</field>
+				</shadow>
+			</value>
+			<value name="BY">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="controls_forEach"></block>
+		<block type="controls_flow_statements"></block>
+	</category>
+	<category name="MATH" colour="%{BKY_MATH_HUE}">
+		<block type="math_number">
+			<field name="NUM">123</field>
+		</block>
+		<block type="math_arithmetic">
+			<value name="A">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+			<value name="B">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_single">
+			<value name="NUM">
+				<shadow type="math_number">
+					<field name="NUM">9</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_trig">
+			<value name="NUM">
+				<shadow type="math_number">
+					<field name="NUM">45</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_constant"></block>
+		<block type="math_number_property">
+			<value name="NUMBER_TO_CHECK">
+				<shadow type="math_number">
+					<field name="NUM">0</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_round">
+			<value name="NUM">
+				<shadow type="math_number">
+					<field name="NUM">3.1</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_on_list"></block>
+		<block type="math_modulo">
+			<value name="DIVIDEND">
+				<shadow type="math_number">
+					<field name="NUM">64</field>
+				</shadow>
+			</value>
+			<value name="DIVISOR">
+				<shadow type="math_number">
+					<field name="NUM">10</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_constrain">
+			<value name="VALUE">
+				<shadow type="math_number">
+					<field name="NUM">50</field>
+				</shadow>
+			</value>
+			<value name="LOW">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+			<value name="HIGH">
+				<shadow type="math_number">
+					<field name="NUM">100</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_random_int">
+			<value name="FROM">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+			<value name="TO">
+				<shadow type="math_number">
+					<field name="NUM">100</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="math_random_float"></block>
+		<block type="math_atan2">
+			<value name="X">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+			<value name="Y">
+				<shadow type="math_number">
+					<field name="NUM">1</field>
+				</shadow>
+			</value>
+		</block>
+	</category>
+	<category name="TEXT" colour="%{BKY_TEXTS_HUE}">
+		<block type="text"></block>
+		<block type="text_join"></block>
+		<block type="text_append">
+			<value name="TEXT">
+				<shadow type="text"></shadow>
+			</value>
+		</block>
+		<block type="text_length">
+			<value name="VALUE">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_isEmpty">
+			<value name="VALUE">
+				<shadow type="text">
+					<field name="TEXT"></field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_indexOf">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">{textVariable}</field>
+				</block>
+			</value>
+			<value name="FIND">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_charAt">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">{textVariable}</field>
+				</block>
+			</value>
+		</block>
+		<block type="text_getSubstring">
+			<value name="STRING">
+				<block type="variables_get">
+					<field name="VAR">{textVariable}</field>
+				</block>
+			</value>
+		</block>
+		<block type="text_changeCase">
+			<value name="TEXT">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_trim">
+			<value name="TEXT">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_print">
+			<value name="TEXT">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="text_prompt_ext">
+			<value name="TEXT">
+				<shadow type="text">
+					<field name="TEXT">abc</field>
+				</shadow>
+			</value>
+		</block>
+	</category>
+	<category name="LISTS" colour="%{BKY_LISTS_HUE}">
+		<block type="lists_create_with">
+			<mutation items="0"></mutation>
+		</block>
+		<block type="lists_create_with"></block>
+		<block type="lists_repeat">
+			<value name="NUM">
+				<shadow type="math_number">
+					<field name="NUM">5</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="lists_length"></block>
+		<block type="lists_isEmpty"></block>
+		<block type="lists_indexOf">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">{listVariable}</field>
+				</block>
+			</value>
+		</block>
+		<block type="lists_getIndex">
+			<value name="VALUE">
+				<block type="variables_get">
+					<field name="VAR">{listVariable}</field>
+				</block>
+			</value>
+		</block>
+		<block type="lists_setIndex">
+			<value name="LIST">
+				<block type="variables_get">
+					<field name="VAR">{listVariable}</field>
+				</block>
+			</value>
+		</block>
+		<block type="lists_getSublist">
+			<value name="LIST">
+				<block type="variables_get">
+					<field name="VAR">{listVariable}</field>
+				</block>
+			</value>
+		</block>
+		<block type="lists_split">
+			<value name="DELIM">
+				<shadow type="text">
+					<field name="TEXT">,</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="lists_sort"></block>
+	</category>
+	<category name="COLOUR" colour="%{BKY_COLOUR_HUE}">
+		<block type="colour_picker"></block>
+		<block type="colour_random"></block>
+		<block type="colour_rgb">
+			<value name="RED">
+				<shadow type="math_number">
+					<field name="NUM">100</field>
+				</shadow>
+			</value>
+			<value name="GREEN">
+				<shadow type="math_number">
+					<field name="NUM">50</field>
+				</shadow>
+			</value>
+			<value name="BLUE">
+				<shadow type="math_number">
+					<field name="NUM">0</field>
+				</shadow>
+			</value>
+		</block>
+		<block type="colour_blend">
+			<value name="COLOUR1">
+				<shadow type="colour_picker">
+					<field name="COLOUR">#ff0000</field>
+				</shadow>
+			</value>
+			<value name="COLOUR2">
+				<shadow type="colour_picker">
+					<field name="COLOUR">#3333ff</field>
+				</shadow>
+			</value>
+			<value name="RATIO">
+				<shadow type="math_number">
+					<field name="NUM">0.5</field>
+				</shadow>
+			</value>
+		</block>
+	</category>
+	<sep></sep>
+	<category name="VARIABLES" colour="%{BKY_VARIABLES_HUE}" custom="VARIABLE"></category>
+	<category name="FUNCTIONS" colour="%{BKY_PROCEDURES_HUE}" custom="PROCEDURE"></category>
+	
+	<!--sg_ai_blk-->
+	<sep></sep>
+	<category name="AI_BLK" colour="%{BKY_VARIABLES_HUE}">
+
+		<block type="fun_sequential"></block>
+		<block type="fun_model_add_input"></block>
+		<block type="fun_model_add_dense">
+			<field name="act">relu</field>
+		</block>
+		
+		<block type="fun_model_compile">
+			<field name="opti">Adam()</field>
+			<field name="loss">binary_crossentropy</field>
+			<field name="metrics">accuracy</field>
+		</block>
+
+		<block type="fun_model_fit">
+			<field name="train_x">train_x</field>
+			<field name="train_y">train_y</field>
+			<field name="vali_x">vali_x</field>
+			<field name="vali_y">vali_y</field>
+		</block>
+		<block type="fun_model_evaluate">
+			<field name="test_x">test_x</field>
+			<field name="test_y">test_y</field>
+		</block>
+		<block type="fun_model_predict"></block>
+		<block type="fun_load_model">
+			<field name="NAME">model.h5</field>
+		</block>
+		<block type="fun_model_save">
+			<field name="NAME">model.h5</field>
+		</block>
+		<block type="fun_user_input">
+			<field name="text_input">...</field>
+		</block>
+	</category>
+	<!--sg_ai_blk-->
+	<sep></sep>
+	
+	
+	<category name="ROBO_BLK" colour="%{BKY_VARIABLES_HUE}" fontStyle="fontStyle">
+		
+		<category name="ROBO" colour="%{BKY_VARIABLES_HUE}">
+			<block type="fun_robo"></block>
+			<block type="fun_robo_delay"></block>
+			<block type="fun_robo_move"></block>
+			<block type="fun_import_blk"></block>
+		</category>
+		<category name="AI" colour="%{BKY_VARIABLES_HUE}">
+			<block type="fun_ai"></block>
+			<block type="fun_ai_cam_open"></block>
+			<block type="fun_ai_cam_img_get"></block>
+			<block type="fun_ai_img_display"></block>
+			<block type="fun_ai_cam_img_to_angle"></block>
+			<block type="fun_ai_img_read"></block>
+			<block type="fun_ai_img_write"></block>
+			
+		</category>
+		<category name="PS" colour="%{BKY_VARIABLES_HUE}">
+			<block type="fun_ps"></block>
+			<block type="fun_ps_read_angle"></block>
+			<block type="fun_ps_read_speed"></block> 
+			<block type="fun_ps_check_event"></block>
+			<block type="fun_ps_key_read"></block> 
+		</category>  
+		<category name="USER" colour="%{BKY_VARIABLES_HUE}">
+			<block type="fun_user"> </block>
+			<block type="fun_user_input"> </block>
+		</category>
+	</category>
+</xml>
+
+
+<body onload="init()" onresize="info()"  onmouseup="m_up(event)"  onmousemove="m_move(event)"> 
+
+	<div id="head_part">
+		<img src="images/iblock_log.png" alt="iBlock" style="float: left; width: 100px; height: auto; margin-top: 15px; margin-left: 20px;">
+		
+		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+			<button type="button" class="btn btn-primary btn-sm" style="margin-top:30px; margin-right:20px;" onclick="func_blk_clear()">BLK CLEAR</button>
+			<button type="button" class="btn btn-success btn-sm" style="margin-top:30px; margin-right:20px;" onclick="func_blk_save()">BLK SAVE</button>
+			<button type="button" class="btn btn-info btn-sm" style="margin-top:30px; margin-right:20px;" onclick="func_fblk_save()">FILE SAVE</button>
+			<button type="button" class="btn btn-warning btn-sm" style="margin-top:30px; margin-right:20px;" onclick="func_fblk_read()">FILE READ</button>
+
+			<!-- <a href="#" id = "blk_clear" class="btn-gradient orange small" style="margin-right: 20px;" >BLK CLEAR</a>
+			<a href="#" id = "blk_save" class="btn-gradient yellow small" style="margin-top: 30px; margin-right: 20px;">BLK SAVE</a>
+			<a href="#" id = "fblk_save" class="btn-gradient green small" style="margin-top: 30px; margin-right: 20px;">FILE SAVE</a>
+			<a href="#" id = "fblk_read" class="btn-gradient cyan small" style="margin-top: 30px; margin-right: 20px;" >FILE READ</a>  -->
+
+		</div>
+		<!-- <button id="code_save" style="position:absolute; left:75%;" onclick="func_code_save()" >BLK SAVE</button>
+		<button id="code_run" style="position:absolute; left:85%;" onclick="func_blk_clear()" >BLK CLEAR</button>
+		<button id="blk_clear" style="position:absolute; left:95%;" onclick="run_js()" >RUN </button> -->
+	</div>
+	
+	<div id='blocklyArea'> </div>
+	<div id="divArea" onmousedown="m_down(event)" onmouseenter="m_enter(event)" onmouseleave="m_leave(event)" ></div>
+	
+	<div id="con_view_area">
+
+		<div id="t1">
+			<button type="button" class="btn btn-link btn-sm" style="margin-top:5px;" disabled >CODE VIEW</button>
+			<button type="button" class="btn btn-danger btn-sm" style="float:right; margin-top:3px; margin-right:10px" onclick="func_copy()">COPY</button>
+			<button type="button" class="btn btn-secondary btn-sm" style="float:right; margin-top:3px; margin-right:10px" onclick="func_code_run()">RUN</button>
+
+		</div>
+
+		<div id="code_div" >
+			<textarea id="code_out" readonly style="height: 100%; width: 100%; font-size: small; font-family: Verdana, Geneva, Tahoma, sans-serif; "></textarea>
+		</div>
+	 
+		<div id="t3" >
+
+			<button type="button" class="btn btn-link btn-sm" style="margin-top:5px;" disabled >STATUS</button>
+			<button type="button" class="btn btn-danger btn-sm" style="float:right; margin-top:3px; margin-right:10px" onclick="func_clear()">CLEAR</button>
+			
+			<!-- <button id="result_btn" title="view_code" style="margin-left: 10px; margin-top: 10px;" >RESULT</button>
+			<button id="clear_btn" title="copy" style="margin-right: 10px; margin: 10px; float: right;"  >CLEAR </button> -->
+		</div>
+		<div id="t4" > </div>
+	</div>
+
+	<div id="bottom" >
+			power by Google
+	</div>
+		
+	<div id="blocklyDiv" style="position: absolute"></div>
+	
+	<!--
+		sgkim_block_insert_part
+	-->
+
+	<script>
+
+		var term = null
+		var obj_dis = null
+		var ws = null
+
+		function fun_insert(cmd){
+
+			term = new Terminal({ cols: 80, rows: 12 });
+
+			obj_dis = document.getElementById('t4')
+			//term.open(document.getElementById('terminal'));
+			term.open(obj_dis)
+			//term.write('ehllo sgkim')
+			// console.log('location.hostname = ' + location.hostname)
+			// console.log('location.port = ' + location.port)
+			var add_str = location.protocol.replace('http', 'ws') + '//' + location.hostname + (location.port ? (':' + location.port) : '') + '/';
+			console.log('address = ' + add_str)
+			ws = new WebSocket(add_str);
+			//var ws = new WebSocket('ws://localhost:8000');
+			ws.onopen = function() {
+				new attach.attach(term, ws);
+				// command send
+				cmd = cmd + '\r'
+				ws.send(cmd);
+			};
+			ws.onerror = function(e) {
+				console.log(e);
+			};
+		}
+		
+		function func_clear(){
+			term.clear()
+			ws.close()
+			delete term
+			//document.getElementById('terminal').innerHTML = ""
+			obj_dis.innerHTML = ""		
+		}
+
+		// function fun_clear(){
+		// 	console.log('run clear')
+		// 	term.clear()
+		// }
+
+	</script>
+
+	<script>
+
+		var blocklyArea = document.getElementById('blocklyArea');
+		var blocklyDiv = document.getElementById('blocklyDiv');
+		var demoWorkspace = Blockly.inject(blocklyDiv,
+				{
+					grid:
+					{ spacing: 25,
+						length: 3,
+						colour: '#ccc',
+						snap: true},
+						media: '../../media/',
+						toolbox: document.getElementById('toolbox'),
+						zoom:
+						{controls: true,
+							wheel: true}
+				
+				});
+		
+		var onresize = function(e) {
+			// Compute the absolute coordinates and dimensions of blocklyArea.
+			var element = blocklyArea;
+			var x = 0;
+			var y = 0;
+			do {
+				x += element.offsetLeft;
+				y += element.offsetTop;
+				element = element.offsetParent;
+			} while (element);
+			// Position blocklyDiv over blocklyArea.
+			blocklyDiv.style.left = x + 'px';
+			blocklyDiv.style.top = y + 'px';
+			blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+			blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+			Blockly.svgResize(demoWorkspace);
+		};
+	
+		window.addEventListener('resize', onresize, false);
+		onresize();
+		Blockly.svgResize(demoWorkspace);
+	
+	</script>
+
+	<script>
+		function showCode() {
+			Blockly.Python.INFINITE_LOOP_TRAP = null;
+			var code = Blockly.Python.workspaceToCode(demoWorkspace);
+			//alert(code);
+			console.log(code)
+			document.getElementById('code_out').value = code;
+		}
+
+		function func_copy() {
+			/* Get the text field */
+			var copyText = document.getElementById("code_out");
+
+			/* Select the text field */
+			copyText.select();
+			copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+			/* Copy the text inside the text field */
+			document.execCommand("copy");
+			copyText.select()
+			
+			/* Alert the copied text */
+			//alert("Copied the text: " + copyText.value);
+			console.log("copy: " + copyText.value)
+		}
+
+		function func_code_run() {
+
+			/* Get the text field */
+			var copyText = document.getElementById("code_out");
+			console.log('run_code:')
+			console.log(copyText.value)
+
+			var add_str = location.protocol.replace('http', 'ws') + '//' + 
+						location.hostname + (location.port ? (':' + (parseInt(location.port)+1) ) : '') + '/';
+			console.log('address = ' + add_str)
+			let fws = new WebSocket(add_str);
+			//var ws = new WebSocket('ws://localhost:8000');
+			fws.onopen = function() {
+				console.log('file write open')
+				fws.send(copyText.value)
+				fws.close()
+				// terminal insert and send command
+				fun_insert('python run_code.py');
+			};
+			
+			fws.onerror = function(e) {
+				console.log(e);
+			};
+
+		}
+
+		function func_blk_save() {
+			var xmlDom = Blockly.Xml.workspaceToDom(demoWorkspace);
+			var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+			//console.log(xmlText)
+			storage = window['localStorage'];
+			var save_xml = xmlText;
+			//console.log(save_xml)
+			storage.setItem("save_xml", save_xml);
+		}
+		function func_blk_clear(){
+			demoWorkspace.clear();
+		}
+
+		function func_fblk_save() {
+			var xmlDom = Blockly.Xml.workspaceToDom(demoWorkspace);
+			var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+			console.log('func_fblk_save()');
+			//var FileSaver = require('file-saver');
+			var blob = new Blob([xmlText], {type: "text/plain;charset=utf-8"});
+			//FileSaver.saveAs(blob, "file.xml");
+			saveAs(blob, "file.xml");						
+		}
+
+		function func_fblk_read(){
+			openFile(data =>{
+				console.log('func_fblk_read');
+				//var save_xml = storage.getItem("save_xml");
+				var xml = Blockly.Xml.textToDom(data);
+				Blockly.Xml.domToWorkspace(xml, demoWorkspace);
+			})
+			// console.log('fblk read');
+			// //var save_xml = storage.getItem("save_xml");
+			// var xml = Blockly.Xml.textToDom(data);
+			// Blockly.Xml.domToWorkspace(xml, demoWorkspace);
+		}
+
+		function init(){
+			var rtn = storageAvailable('localStorage');
+			if( rtn == true){
+				console.log('return valu = true');
+			}
+			storage = window['localStorage'];
+			var save_xml = storage.getItem("save_xml");
+		
+			if( save_xml != null)
+			{
+				var xml = Blockly.Xml.textToDom(save_xml);
+				Blockly.Xml.domToWorkspace(xml, demoWorkspace);
+			}
+		}
+
+
+		function storageAvailable(type) { 
+			var storage; 
+			try { storage = window[type]; 
+				var x = '__storage_test__'; 
+				storage.setItem(x, x); 
+				storage.removeItem(x); 
+				return true; 
+			} 
+			catch(e) { 
+				return e instanceof DOMException && ( 
+					// everything except Firefox 
+					e.code === 22 || // Firefox 
+					e.code === 1014 || // test name field too, because code might not be present // everything except Firefox 
+					e.name === 'QuotaExceededError' || // Firefox 
+					e.name === 'NS_ERROR_DOM_QUOTA_REACHED') && 
+					// acknowledge QuotaExceededError only if there's something already stored 
+					(storage && storage.length !== 0); 
+				} 
+			}
+
+		function run_js() {
+			//Blockly.Python.INFINITE_LOOP_TRAP = 'checkTimeout();\n';
+			Blockly.Python.INFINITE_LOOP_TRAP = null;
+			var timeouts = 0;
+			var checkTimeout = function() {
+				if (timeouts++ > 1000000) {
+					throw MSG['timeout'];
+				}
+			};
+			var code = Blockly.Python.workspaceToCode(demoWorkspace);
+			Blockly.Python.INFINITE_LOOP_TRAP = null;
+			try {
+				eval(code);
+			} catch (e) {
+				//alert(MSG['badCode'].replace('%1', e));
+				console.log(e)
+			}
+		};
+
+		function mirrorEvent(primaryEvent) {
+			if (primaryEvent instanceof Blockly.Events.Ui) {
+				return;  // Don't mirror UI events.
+			}
+			showCode();
+		}
+ 
+		demoWorkspace.addChangeListener(mirrorEvent);
+		window.addEventListener('load', init());
+
+		function readSingleFile(e){
+				console.log('reakdk')
+		}
+		
+		const readInputFile = (inputElement, callback) => {
+			const reader = new FileReader();
+			reader.onload = () => {
+				callback(reader.result)
+			};
+			reader.readAsText(inputElement.files[0]);
+		}
+
+		openFile = (callback) => {
+			var el = document.createElement('input');
+			el.setAttribute('type', 'file');
+			el.style.display = 'none';
+			document.body.appendChild(el);
+			el.onchange = () => {readInputFile(el, (data) => {
+				callback(data)
+				document.body.removeChild(el);
+			})}
+			el.click();
+		}
+
+		$('a').click(function(event){
+				event.preventDefault(); 
+				let id = event.target.id;
+
+				if(id == "blk_clear"){
+					func_blk_clear();          
+				} else if( id == "blk_save") {
+					func_blk_save();
+				} else if( id == "fblk_save") {
+					func_fblk_save();
+				} else if( id == "fblk_read"){
+					openFile(data => {
+						//console.log(data)
+						func_fblk_read(data);
+					})  
+				}
+
+			});
+
+		 
+	</script>
+
+	<!-- window_size_chang_script -->
+
+	<script>
+
+		var bw, w1, w2, w3;
+		var m_sts = 'up';
+		var m_after_move = false;
+		var m_mvx = 0;
+
+		function init(){
+				bw = document.body.clientWidth;
+				w1 = document.getElementById('blocklyArea').clientWidth;
+				w2 = document.getElementById('divArea').clientWidth;
+				w3 = document.getElementById('con_view_area').clientWidth;
+		}
+		
+		function info(){
+				bw = document.body.clientWidth;
+				w1 = document.getElementById('blocklyArea').clientWidth;
+				w2 = document.getElementById('divArea').clientWidth;
+				w3 = document.getElementById('con_view_area').clientWidth;
+				// var str = `width ${bw} , ${w1} , ${w2}, ${w3}`;
+				// console.log(str);
+				// console.log( w1 + w2 + w3 );
+				onresize();
+		}
+
+		function m_down(event){
+			info();
+			var x = event.clientX;
+			var y = event.clientY;
+			var str = `point = ${x}, ${y} `;
+			//console.log(str)  
+			m_sts = 'down'
+				
+		}
+
+		function m_enter(event){
+				//console.log('enter')
+				document.body.style.cursor = "col-resize";
+
+		}
+		function m_leave(event){
+				//console.log('enter')
+				document.body.style.cursor = "default";
+
+		}
+
+		function m_move(event)
+		{
+			if(m_sts == 'down'){
+				var x = event.clientX;
+				var y = event.clientY;
+				var str = `point = ${x}, ${y} `;
+				//console.log(str)
+				m_mvx = x - 5;
+
+				if(x > 200 && x < bw - 200)
+				{
+						document.getElementById('blocklyArea').style.width = `${(x - 5)}px`;
+						document.getElementById('divArea').style.width = '10px';
+						document.getElementById('con_view_area').style.width =  `${bw - ((x + 5))}px` ;
+
+						onresize(event);
+
+						m_after_move = true
+				}
+			}           
+		}
+
+		function m_up(event){
+				
+			if (m_after_move == true)
+				{
+					//console.log('up event')
+					m_sts = 'up';
+					document.body.style.cursor = "default";
+					var x = event.clientX;
+					var w1_w = Math.round(( x - 5 ) / bw * 100)
+					//console.log(w1_w) 
+
+					document.getElementById('blocklyArea').style.width = `${w1_w}%`;
+					document.getElementById('divArea').style.width = '10px';
+					document.getElementById('con_view_area').style.width = `calc( ${100 - w1_w}% -  10px )`;
+
+					onresize(event);
+					m_after_move = false
+
+				}
+		}
+
+	</script>
+
+</body>
+</html>
