@@ -491,51 +491,51 @@
 
 		function fun_insert(){
 
-			term = new Terminal({ cols: 80, rows: 12 });
-
-			obj_dis = document.getElementById('t4')
+			if(term != null)
+			{
+				term = new Terminal({ cols: 80, rows: 12 });
+				obj_dis = document.getElementById('t4')
+				//term.open(document.getElementById('terminal'));
+				term.open(obj_dis)
+				term.clear()
+			}
 			
-			//term.open(document.getElementById('terminal'));
-			term.open(obj_dis)
-			term.clear()
-
 			//term.write('ehllo sgkim')
 			// console.log('location.hostname = ' + location.hostname)
 			// console.log('location.port = ' + location.port)
-			var add_str = location.protocol.replace('http', 'ws') + '//' + location.hostname + (location.port ? (':' + location.port) : '') + '/';
-			console.log('address = ' + add_str)
-			ws = new WebSocket(add_str);
-			//var ws = new WebSocket('ws://localhost:8000');
-			ws.onopen = function() {
-				new attach.attach(term, ws);
-				// command send
-				//cmd = cmd + '\r'
-				//ws.send(cmd);
-			};
 			
-			ws.onclose = function(){
-				ws.close();
-			}
-			
-			ws.onerror = function(e) {
-				console.log(e);
-			};
+			if(ws != null)
+			{
+				var add_str = location.protocol.replace('http', 'ws') + '//' + location.hostname + (location.port ? (':' + location.port) : '') + '/';
+				console.log('address = ' + add_str)
+				ws = new WebSocket(add_str);
+				//var ws = new WebSocket('ws://localhost:8000');
+				ws.onopen = function() {
+					new attach.attach(term, ws);
+					// command send
+					//cmd = cmd + '\r'
+					//ws.send(cmd);
+				};
+				
+				ws.onclose = function(){
+					ws.close();
+					ws = null;
+				}
+				
+				ws.onerror = function(e) {
+					console.log(e);
+				};
 
+			}
 
 		}
 		
 		function func_clear(){
 			term.clear()
 			ws.close()
-			delete term
-			//document.getElementById('terminal').innerHTML = ""
+			term = null
 			obj_dis.innerHTML = ""		
 		}
-
-		// function fun_clear(){
-		// 	console.log('run clear')
-		// 	term.clear()
-		// }
 
 	</script>
 
