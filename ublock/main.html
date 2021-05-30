@@ -494,8 +494,11 @@
 			term = new Terminal({ cols: 80, rows: 12 });
 
 			obj_dis = document.getElementById('t4')
+			
 			//term.open(document.getElementById('terminal'));
 			term.open(obj_dis)
+			term.clear()
+
 			//term.write('ehllo sgkim')
 			// console.log('location.hostname = ' + location.hostname)
 			// console.log('location.port = ' + location.port)
@@ -509,9 +512,16 @@
 				//cmd = cmd + '\r'
 				//ws.send(cmd);
 			};
+			
+			ws.onclose = function(){
+				ws.close();
+			}
+			
 			ws.onerror = function(e) {
 				console.log(e);
 			};
+
+
 		}
 		
 		function func_clear(){
