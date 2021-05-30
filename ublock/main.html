@@ -491,7 +491,7 @@
 
 		function fun_insert(){
 
-			if(term != null)
+			if(term == null)
 			{
 				term = new Terminal({ cols: 80, rows: 12 });
 				obj_dis = document.getElementById('t4')
@@ -504,7 +504,7 @@
 			// console.log('location.hostname = ' + location.hostname)
 			// console.log('location.port = ' + location.port)
 			
-			if(ws != null)
+			if(ws == null)
 			{
 				var add_str = location.protocol.replace('http', 'ws') + '//' + location.hostname + (location.port ? (':' + location.port) : '') + '/';
 				console.log('address = ' + add_str)
@@ -534,6 +534,7 @@
 			term.clear()
 			ws.close()
 			term = null
+			ws= null
 			obj_dis.innerHTML = ""		
 		}
 
@@ -759,24 +760,24 @@
 			el.click();
 		}
 
-		$('a').click(function(event){
-				event.preventDefault(); 
-				let id = event.target.id;
+		// $('a').click(function(event){
+		// 		event.preventDefault(); 
+		// 		let id = event.target.id;
 
-				if(id == "blk_clear"){
-					func_blk_clear();          
-				} else if( id == "blk_save") {
-					func_blk_save();
-				} else if( id == "fblk_save") {
-					func_fblk_save();
-				} else if( id == "fblk_read"){
-					openFile(data => {
-						//console.log(data)
-						func_fblk_read(data);
-					})  
-				}
+		// 		if(id == "blk_clear"){
+		// 			func_blk_clear();          
+		// 		} else if( id == "blk_save") {
+		// 			func_blk_save();
+		// 		} else if( id == "fblk_save") {
+		// 			func_fblk_save();
+		// 		} else if( id == "fblk_read"){
+		// 			openFile(data => {
+		// 				//console.log(data)
+		// 				func_fblk_read(data);
+		// 			})  
+		// 		}
 
-			});
+		// 	});
 
 		 
 	</script>
