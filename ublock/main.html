@@ -489,7 +489,7 @@
 		var obj_dis = null
 		var ws = null
 
-		function fun_insert(cmd){
+		function fun_insert(){
 
 			term = new Terminal({ cols: 80, rows: 12 });
 
@@ -506,8 +506,8 @@
 			ws.onopen = function() {
 				new attach.attach(term, ws);
 				// command send
-				cmd = cmd + '\r'
-				ws.send(cmd);
+				//cmd = cmd + '\r'
+				//ws.send(cmd);
 			};
 			ws.onerror = function(e) {
 				console.log(e);
@@ -613,9 +613,12 @@
 			fws.onopen = function() {
 				console.log('file write open')
 				fws.send(copyText.value)
-				fws.close()
+
 				// terminal insert and send command
-				fun_insert('python run_code.py');
+				fun_insert()
+
+				fws.close()
+
 			};
 			
 			fws.onerror = function(e) {
