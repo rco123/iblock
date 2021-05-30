@@ -577,7 +577,7 @@
 			Blockly.Python.INFINITE_LOOP_TRAP = null;
 			var code = Blockly.Python.workspaceToCode(demoWorkspace);
 			//alert(code);
-			//console.log(code)
+			//console.log(code);
 			document.getElementById('code_out').value = code;
 		}
 
@@ -662,8 +662,8 @@
 
 		function init(){
 			var rtn = storageAvailable('localStorage');
-			if( rtn == true){
-				console.log('return valu = true');
+			if( rtn == false){
+				console.log('return valu = false');
 			}
 			storage = window['localStorage'];
 			var save_xml = storage.getItem("save_xml");
@@ -674,7 +674,6 @@
 				Blockly.Xml.domToWorkspace(xml, demoWorkspace);
 			}
 		}
-
 
 		function storageAvailable(type) { 
 			var storage; 
