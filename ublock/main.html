@@ -600,6 +600,9 @@
 
 		function func_code_run() {
 
+			// terminal insert and send command
+			fun_insert()
+
 			/* Get the text field */
 			var copyText = document.getElementById("code_out");
 			console.log('run_code:')
@@ -613,12 +616,7 @@
 			fws.onopen = function() {
 				console.log('file write open')
 				fws.send(copyText.value)
-
-				// terminal insert and send command
-				fun_insert()
-
 				fws.close()
-
 			};
 			
 			fws.onerror = function(e) {
